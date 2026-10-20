@@ -3,6 +3,7 @@ package br.edu.fatecfranca.api.controllers;
 
 import java.util.List;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -66,13 +67,17 @@ public class AlunoController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> excluir(@PathVariable String id) {
-
-        if (service.buscarPorId(id).isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-
         service.excluir(id);
-
         return ResponseEntity.noContent().build();
+
+        // Código anterior estáva assim:
+        
+        // if (service.buscarPorId(id).isEmpty()) {
+        //     return ResponseEntity.notFound().build();
+        // }
+
+        // service.excluir(id);
+
+        // return ResponseEntity.noContent().build();
     }
 }
