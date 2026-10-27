@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.edu.fatecfranca.api.dtos.TurmaResponse;
 import br.edu.fatecfranca.api.models.Turma;
 import br.edu.fatecfranca.api.services.TurmaService;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequestMapping("/turmas")
@@ -29,15 +32,28 @@ public class TurmaController {
 
     @GetMapping
     public List<Turma> listarTodos() {
-        return service.listarTodos();
+        return service.listarComDetalhes();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Turma> buscarPorId(@PathVariable String id) {
-        return service.buscarPorId(id)
+        return service.buscarComDetalhes(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+
+    @GetMapping("/curso/{cursoId}")
+    public List<TurmaResponse> listarPorCurso(
+            @PathVariable String cursoId) {
+        return service.listarPorCursoComDetalhes(cursoId);
+    }
+
+    @GetMapping("/instrutor/{instrutorId}")
+    public List<Turma> listarPorInstrutor(
+            @PathVariable String instrutorId) {
+        return service.listarPorInstrutor(instrutorId);
+    }
+    
 
     @PostMapping
     public ResponseEntity<Turma> criar(@RequestBody Turma turma) {
@@ -66,13 +82,7 @@ public class TurmaController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> excluir(@PathVariable String id) {
-
-        if (service.buscarPorId(id).isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-
         service.excluir(id);
-
         return ResponseEntity.noContent().build();
     }
 }

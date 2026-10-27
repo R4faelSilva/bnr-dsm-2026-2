@@ -1,5 +1,6 @@
 package br.edu.fatecfranca.api.models;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
@@ -13,9 +14,9 @@ public class Turma {
 
     private String cursoId;
     private String instrutorId;
-    private String dataInicio;
-    private String dataFim;
-    private String numVagas;
+    private LocalDate dataInicio;
+    private LocalDate dataFim;
+    private Integer numVagas;
     private String status;
     private List<Horario> horarios;
     
@@ -26,9 +27,9 @@ public class Turma {
             String id, 
             String cursoId, 
             String instrutorId, 
-            String dataInicio, 
-            String dataFim, 
-            String numVagas,
+            LocalDate dataInicio, 
+            LocalDate dataFim, 
+            Integer numVagas,
             String status,
             List<Horario> horarios) {
         this.id = id;
@@ -65,27 +66,27 @@ public class Turma {
         this.instrutorId = instrutorId;
     }
 
-    public String getDataInicio() {
+    public LocalDate getDataInicio() {
         return dataInicio;
     }
 
-    public void setDataInicio(String dataInicio) {
+    public void setDataInicio(LocalDate dataInicio) {
         this.dataInicio = dataInicio;
     }
 
-    public String getDataFim() {
+    public LocalDate getDataFim() {
         return dataFim;
     }
 
-    public void setDataFim(String dataFim) {
+    public void setDataFim(LocalDate dataFim) {
         this.dataFim = dataFim;
     }
 
-    public String getNumVagas() {
+    public Integer getNumVagas() {
         return numVagas;
     }
 
-    public void setNumVagas(String numVagas) {
+    public void setNumVagas(Integer numVagas) {
         this.numVagas = numVagas;
     }
 

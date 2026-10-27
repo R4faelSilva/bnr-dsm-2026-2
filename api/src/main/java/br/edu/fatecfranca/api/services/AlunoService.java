@@ -41,7 +41,7 @@ public class AlunoService {
                     "Aluno não encontrado.");       
         }
 
-        if (matriculaRepository.existsAlunoId(id)) {
+        if (matriculaRepository.existsByAlunoId(id)) {
             throw new ResponseStatusException(
                 HttpStatus.CONFLICT,
                 "Não é possível excluir um aluno com matriculas vinculadas.");

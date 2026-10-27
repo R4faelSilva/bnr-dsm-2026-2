@@ -45,6 +45,14 @@ public class MatriculaController {
 
         return service.listarPorAluno(alunoId);
     }
+
+    @GetMapping("/turma/{turmaId}")
+    public List<Matricula> listarPorTurma(
+        @PathVariable String turmaId) {
+
+        return service.listarPorTurma(turmaId);        
+    }
+    
     
 
     @PostMapping
