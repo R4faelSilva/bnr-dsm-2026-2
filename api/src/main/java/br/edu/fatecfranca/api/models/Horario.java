@@ -1,16 +1,21 @@
 package br.edu.fatecfranca.api.models;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class Horario {
 
+    @NotBlank(message = "O dia da semana é obrigatório.")
     private String diaSemana;
+
+    @NotBlank(message = "O horário de inicio é obrigatório.")
     private String inicio;
+
+    @NotBlank(message = "O horário do fim é obrigatório.")
     private String fim;
 
-        public Horario() {
+    public Horario() {
     }
     
-
-
     public Horario(
             String diaSemana, 
             String inicio, 

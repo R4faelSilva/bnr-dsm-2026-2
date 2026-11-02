@@ -11,9 +11,9 @@ public interface TurmaRepository
 
     List<Turma> findByCursoId(String cursoId);
 
-    boolean existByCursoId(String cursoId);
+    boolean existsByCursoId(String cursoId);
 
     List<Turma> findByInstrutorId(String instrutorId);
 
-    boolean existByInstrutorId(String instrutorId);
+    boolean existsByInstrutorId(String instrutorId);
 }

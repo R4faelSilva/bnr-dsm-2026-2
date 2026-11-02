@@ -5,15 +5,25 @@ import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+
 @Document(collection = "cursos")
 public class Curso {
 
     @Id 
     private String id;
 
+    @NotBlank(message = "O nome da turma é obrigatório.")
     private String nome;
+
+    @NotBlank(message = "O nome da turma é obrigatório.")
     private String cargaHoraria;
-    private String valor;
+
+    @NotNull(message = "O valor do cursó é obrigatório")
+    @Positive(message = "O número de vagas deve ser maior que zero.")
+    private Double valor;
 
     private List<Modulo> modulos;
 
@@ -21,7 +31,7 @@ public class Curso {
             String id,
             String nome,
             String cargaHoraria,
-            String valor,
+            Double valor,
             List<Modulo> modulos) {
         this.id = id;
         this.nome = nome;
@@ -54,11 +64,11 @@ public class Curso {
         this.cargaHoraria = cargaHoraria;
     }
 
-    public String getValor() {
+    public Double getValor() {
         return valor;
     }
 
-    public void setValor(String valor) {
+    public void setValor(Double valor) {
         this.valor = valor;
     }
 

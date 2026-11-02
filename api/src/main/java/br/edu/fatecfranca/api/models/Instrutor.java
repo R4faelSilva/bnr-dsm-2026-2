@@ -5,16 +5,26 @@ import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import jakarta.validation.constraints.NotBlank;
+
 @Document(collection = "intrutores")
 public class Instrutor {
 
     @Id
     private String id;
 
+    @NotBlank(message = "O nome é obrigatório.")
     private String nome;
+
+    @NotBlank(message = "O CPF é obrigatório.")
     private String cpf;
+
+    @NotBlank(message = "O EMAIL é obrigatório.")
     private String email;
+
+    @NotBlank(message = "O Valor da hora por aula é obrigatório.")
     private String valorHoraAula;
+
     private List<String> especialidades;
     
     private List<Endereco> enderecos;

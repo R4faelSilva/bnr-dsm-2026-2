@@ -5,15 +5,24 @@ import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+
 @Document(collection = "matriculas")
 public class Matricula {
 
     @Id 
     private String id;
-
     private String alunoId;
     private String turmaId;
+
+    @NotBlank(message = "O status é obrigatório.")
+    @Pattern(
+        regexp = "ABERTA | FECHADA",
+        message = "O status deve ser ABERTO ou FECHADA"
+    )
     private String status;
+
     private List<Nota> notas;
 
     public Matricula() {

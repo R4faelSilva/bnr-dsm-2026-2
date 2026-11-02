@@ -41,7 +41,7 @@ public class CursoService {
                     "Turma não encontrada");
         }
 
-        if(turmaRepository.existByCursoId(id)) {
+        if(turmaRepository.existsByCursoId(id)) {
             throw new ResponseStatusException(
                     HttpStatus.CONFLICT,
                 "Não é possível excluir um curso com turmas vinculadas.");

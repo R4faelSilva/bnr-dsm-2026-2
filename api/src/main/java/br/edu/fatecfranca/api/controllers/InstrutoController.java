@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.fatecfranca.api.models.Instrutor;
 import br.edu.fatecfranca.api.services.InstrutorService;
+import jakarta.validation.Valid;
 
 import java.util.List;
 
@@ -40,7 +41,10 @@ public class InstrutoController {
     }
     
     @PostMapping
-    public ResponseEntity<Instrutor> criar(@RequestBody Instrutor instrutor) {
+    public ResponseEntity<Instrutor> criar(
+            @Valid 
+            @RequestBody Instrutor instrutor) {
+                
         Instrutor instrutorSalvo = service.salvar(instrutor);
 
         return ResponseEntity
@@ -50,6 +54,7 @@ public class InstrutoController {
 
     @PostMapping("/{id}")
     public ResponseEntity<Instrutor> atualizar(
+            @Valid 
             @PathVariable String id,
             @RequestBody Instrutor instrutor) {
         

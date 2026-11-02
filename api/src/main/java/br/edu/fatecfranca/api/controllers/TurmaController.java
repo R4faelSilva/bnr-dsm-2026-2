@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.edu.fatecfranca.api.dtos.TurmaResponse;
 import br.edu.fatecfranca.api.models.Turma;
 import br.edu.fatecfranca.api.services.TurmaService;
-import org.springframework.web.bind.annotation.RequestParam;
+import jakarta.validation.Valid;
 
 
 @RestController
@@ -31,12 +31,12 @@ public class TurmaController {
     }
 
     @GetMapping
-    public List<Turma> listarTodos() {
+    public List<TurmaResponse> listarTodos() {
         return service.listarComDetalhes();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Turma> buscarPorId(@PathVariable String id) {
+    public ResponseEntity<TurmaResponse> buscarPorId(@PathVariable String id) {
         return service.buscarComDetalhes(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -56,7 +56,7 @@ public class TurmaController {
     
 
     @PostMapping
-    public ResponseEntity<Turma> criar(@RequestBody Turma turma) {
+    public ResponseEntity<Turma> criar(@Valid @RequestBody Turma turma) {
         Turma turmaSalvo = service.salvar(turma);
 
         return ResponseEntity
@@ -66,6 +66,7 @@ public class TurmaController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Turma> atualizar(
+            @Valid 
             @PathVariable String id,
             @RequestBody Turma turma) {
 

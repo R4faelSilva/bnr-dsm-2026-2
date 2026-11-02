@@ -41,7 +41,7 @@ public class InstrutorService {
                 "Instrutor não encontrado");
         }
 
-        if (turmaRepository.existByInstrutorId(id)) {
+        if (turmaRepository.existsByInstrutorId(id)) {
             throw new ResponseStatusException(
                     HttpStatus.CONFLICT,
                 "Não é possívelexcluir um aluno com matriculas vinculadas.");

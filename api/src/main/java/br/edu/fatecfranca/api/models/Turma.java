@@ -6,18 +6,39 @@ import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.validation.constraints.AssertTrue;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Positive;
+
 @Document(collection = "turmas")
 public class Turma {
     
     @Id
     private String id;
-
-    private String cursoId;
     private String instrutorId;
+    private String cursoId;
+
+    @NotNull(message = "A data inicial é obrigatória.")
     private LocalDate dataInicio;
-    private LocalDate dataFim;
+
+    @NotNull(message = "A data final é obrigatória.")
+     private LocalDate dataFim;
+
+    @NotNull(message = "O número de vagas é obrigatório.")
+    @Positive(message = "O número de vagas deve er maior que zero.")
     private Integer numVagas;
+
+    @NotBlank(message = "O status é obrigatório.")
+    @Pattern(
+        regexp = "PREVISTA|ATIVA|ENCERRADA|CANCELADA",
+        message = "O status deve ser PREVISTA, AIVA, ENCERRADA ou CANCELADA."
+    )
     private String status;
+
     private List<Horario> horarios;
     
     public Turma() {
@@ -40,6 +61,16 @@ public class Turma {
         this.numVagas = numVagas;
         this.status = status;
         this.horarios = horarios;
+    }
+
+    @JsonIgnore
+    @AssertTrue(message = "A data final não pode ser anterior à data inicial.")
+    public boolean isPeriodoValido() {
+        if (dataInicio == null || dataFim == null) {
+            return true;
+        }
+
+        return !dataFim.isBefore(dataInicio);
     }
 
     public String getId() {

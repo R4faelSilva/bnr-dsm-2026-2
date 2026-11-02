@@ -17,4 +17,8 @@ public interface MatriculaRepository
    List<Matricula> findByTurmaId(String turmaId);
 
    boolean existsByTurmaId(String turmaId);
+
+   boolean existsByAlunoIdAndTurmaId(String alunoId, String turmaId);
+
+   long countByTurmaId(String turmaId);
 }
