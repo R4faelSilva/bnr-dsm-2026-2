@@ -18,7 +18,7 @@ public class Matricula {
 
     @NotBlank(message = "O status é obrigatório.")
     @Pattern(
-        regexp = "ABERTA | FECHADA",
+        regexp = "ABERTA|FECHADA",
         message = "O status deve ser ABERTO ou FECHADA"
     )
     private String status;

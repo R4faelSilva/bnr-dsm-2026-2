@@ -43,22 +43,26 @@ public class MatriculaController {
 
     @GetMapping("/turma/{turmaId}")
     public List<MatriculaResponse> listarPorTurma(
-        @PathVariable String turmaId) {
+            @PathVariable String turmaId) {
 
-        return service.listarPorTurmaComDetalhes(turmaId);        
+        return service.listarPorTurmaComDetalhes(turmaId);
     }
 
     @GetMapping("/aluno/{alunoId}")
     public List<MatriculaResponse> listarPorAluno(
-        @PathVariable String alunoId) {
+            @PathVariable String alunoId) {
 
         return service.listarPorAlunoComDetalhes(alunoId);
     }
-    
+
+    @GetMapping("/curso/{cursoId}")
+    public List<MatriculaResponse> listarPorCurso(@PathVariable String cursoId) {
+        return service.listarPorCursoComDetalhes(cursoId);
+    }
+
     @PostMapping
     public ResponseEntity<Matricula> criar(
-            @Valid 
-            @RequestBody Matricula matricula) {
+            @Valid @RequestBody Matricula matricula) {
 
         Matricula matriculaSalvo = service.salvar(matricula);
 
@@ -69,9 +73,8 @@ public class MatriculaController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Matricula> atualizar(
-            @Valid
             @PathVariable String id,
-            @RequestBody Matricula matricula) {
+            @Valid @RequestBody Matricula matricula) {
 
         if (service.buscarPorId(id).isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -79,9 +82,9 @@ public class MatriculaController {
 
         matricula.setId(id);
 
-        Matricula matriculaAtualizado = service.salvar(matricula);
+        Matricula matriculaAtualizada = service.atualizar(matricula);
 
-        return ResponseEntity.ok(matriculaAtualizado);
+        return ResponseEntity.ok(matriculaAtualizada);
     }
 
     @DeleteMapping("/{id}")

@@ -12,6 +12,7 @@ import br.edu.fatecfranca.api.models.Aluno;
 import br.edu.fatecfranca.api.models.Matricula;
 import br.edu.fatecfranca.api.models.Turma;
 import br.edu.fatecfranca.api.repositories.AlunoRepository;
+import br.edu.fatecfranca.api.repositories.CursoRepository;
 import br.edu.fatecfranca.api.repositories.MatriculaRepository;
 import br.edu.fatecfranca.api.repositories.TurmaRepository;
 
@@ -21,12 +22,14 @@ public class MatriculaService {
     private final MatriculaRepository repository;
     private final AlunoRepository alunoRepository;
     private final TurmaRepository turmaRepository;
+    private final CursoRepository cursoRepository;
 
     public MatriculaService(MatriculaRepository repository, AlunoRepository alunoRepository,
-            TurmaRepository turmaRepository, TurmaService turmaService) {
+            TurmaRepository turmaRepository, TurmaService turmaService, CursoRepository cursoRepository) {
         this.repository = repository;
         this.alunoRepository = alunoRepository;
         this.turmaRepository = turmaRepository;
+        this.cursoRepository = cursoRepository;
     }
 
     private MatriculaResponse montarResposta(Matricula matricula) {
@@ -100,6 +103,16 @@ public class MatriculaService {
         }
     }
 
+    public List<MatriculaResponse> listarPorCursoComDetalhes(String cursoId) {
+        if (!cursoRepository.existsById(cursoId)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Curso não encontrado.");
+        }
+        List<String> turmaIds = turmaRepository.findByCursoId(cursoId).stream()
+                .map(Turma::getId).toList();
+        return repository.findByTurmaIdIn(turmaIds).stream()
+                .map(this::montarResposta).toList();
+    }
+
     public List<Matricula> listarTodos() {
         return repository.findAll();
     }
@@ -130,8 +143,8 @@ public class MatriculaService {
 
         Turma turma = turmaRepository.findById(matricula.getTurmaId())
                 .orElseThrow(() -> new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, 
-                    "Turma não encontrada."));
+                        HttpStatus.NOT_FOUND,
+                        "Turma não encontrada."));
 
         long matriculasAtivas = repository.countByTurmaId(matricula.getTurmaId());
 
@@ -140,6 +153,13 @@ public class MatriculaService {
                     HttpStatus.BAD_REQUEST,
                     "A turma está lotada. Não há vagas disponíveis.");
         }
+        return repository.save(matricula);
+    }
+
+    public Matricula atualizar(Matricula matricula) {
+        verificarAluno(matricula.getAlunoId());
+        verificarTurma(matricula.getTurmaId());
+
         return repository.save(matricula);
     }
 

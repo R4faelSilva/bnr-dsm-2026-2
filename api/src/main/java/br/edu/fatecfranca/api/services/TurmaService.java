@@ -62,7 +62,7 @@ public class TurmaService {
                turma.getId(),
                turma.getCursoId(),
                turma.getInstrutorId(),
-               turma.getDataFim(),
+               turma.getDataInicio(),
                turma.getDataFim(),
                turma.getNumVagas(),
                turma.getHorario(),

@@ -15,14 +15,14 @@ public class Curso {
     @Id 
     private String id;
 
-    @NotBlank(message = "O nome da turma é obrigatório.")
+    @NotBlank(message = "O nome do curso é obrigatório.")
     private String nome;
 
-    @NotBlank(message = "O nome da turma é obrigatório.")
+    @NotBlank(message = "A carga horária é obrigatório.")
     private String cargaHoraria;
 
-    @NotNull(message = "O valor do cursó é obrigatório")
-    @Positive(message = "O número de vagas deve ser maior que zero.")
+    @NotNull(message = "O valor do curso é obrigatório")
+    @Positive(message = "O valor do curso deve ser maior que zero.")
     private Double valor;
 
     private List<Modulo> modulos;
